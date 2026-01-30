@@ -5,7 +5,7 @@ const GAS_URL = "AKfycbwU9_8VlxU22F5NNnMmoCH9s0ju-Rt2Vc-4Z4pAWlqJo5a4h1c_WoPCxEE
 
 const GROUP_ID = "m2";
 const UPLOAD_API_ENDPOINT = "https://order.dv-gsaroma.com/upload-api";
-const GROUP_TOKEN = "a781664087c9c3ebb94fd0eb9ad3aa51";
+const GROUP_TOKEN = "e2f682394cda4b5fce616ab23965b1fe";
 
 // フォーム項目リスト(JSON文字列として埋め込まれ、JSでパースされる)
 const FORM_FIELDS = JSON.parse('["マリン池袋北口駅前店"]');

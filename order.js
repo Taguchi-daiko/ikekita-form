@@ -5,7 +5,7 @@ const GAS_URL = "AKfycbz8zlq3jruXA401ajjxslfm9lELkMF-9WusRW5hMiUzRK5o7MU02YJGtEr
 
 const GROUP_ID = "m2";
 const UPLOAD_API_ENDPOINT = "https://order.dv-gsaroma.com/upload-api";
-const GROUP_TOKEN = "75e880c172997b03f0453088e5155a5f";
+const GROUP_TOKEN = "f568525615746c4723c64a943eb9adbe";
 
 // フォーム項目リスト(JSON文字列として埋め込まれ、JSでパースされる)
 const FORM_FIELDS = JSON.parse('["マリン池袋北口駅前店"]');
@@ -1893,17 +1893,23 @@ function setupEventHandlers() {
                 auth_password: CONFIG.AUTH_PASSWORD
             };
 
-            // ZIPファイルの有無フラグを各requestに追加
+            // ⚠️ 重要: ZIPファイルの有無フラグを各requestに追加
+            const allRequestSets = document.querySelectorAll('.request-set');
             requestData.requests = requestData.requests.map(req => {
-                const requestSet = document.querySelector(`.request-set[data-request-id="${req.requestId}"]`);
-                if (requestSet) {
-                    const fileItems = requestSet.querySelectorAll('.file-item');
-                    req.hasZipFile = fileItems.length > 0;
-                } else {
-                    req.hasZipFile = false;
-                }
+                // このrequestIdに対応するrequest-setを探す
+                let hasZip = false;
+                allRequestSets.forEach(requestSet => {
+                    const setId = requestSet.getAttribute('data-request-id');
+                    if (String(setId) === String(req.requestId)) {
+                        const fileItems = requestSet.querySelectorAll('.file-item');
+                        hasZip = fileItems.length > 0;
+                    }
+                });
+                req.hasZipFile = hasZip;
                 return req;
             });
+
+            console.log('送信データ（ZIPフラグ付き）:', requestData);
 
             const jsonData = JSON.stringify(requestData);
             const dataSizeMB = jsonData.length / 1024 / 1024;
